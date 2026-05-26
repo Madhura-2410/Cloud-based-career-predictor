@@ -1,0 +1,49 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  pythonVersion: '3.11'
+  backendPath: './backend'
+  frontendPath: './frontend'
+
+stages:
+- stage: Build_and_Test
+  jobs:
+  - job: Backend
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+    - script: |
+        python -m pip install --upgrade pip
+        pip install -r $(backendPath)/requirements.txt
+      displayName: 'Install Dependencies'
+    - script: |
+        pip install pytest pytest-azurepipelines
+        pytest $(backendPath)/tests
+      displayName: 'Run Tests'
+
+  - job: Frontend
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '20.x'
+    - script: |
+        cd $(frontendPath)
+        npm install
+        npm run build
+      displayName: 'Build Frontend'
+
+- stage: Deploy_to_Azure
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  jobs:
+  - job: Deploy
+    steps:
+    - task: AzureWebApp@1
+      inputs:
+        azureSubscription: 'Azure-Connection'
+        appName: 'ai-skill-platform-backend'
+        package: '$(backendPath)'

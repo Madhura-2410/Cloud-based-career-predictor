@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Based Career Longevity & Skill Obsolescence Predictor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landing-page" class="page active">
+        <div class="container">
+            <div class="landing-content">
+                <div class="hero-section">
+                    <h1 class="main-title">Cloud Based Career Longevity and Skill Obsolescence Predictor</h1>
+                    <p class="description">
+                        Discover your career trajectory with our advanced AI-powered platform that predicts skill relevance and career longevity.
+                        Gain actionable insights to stay ahead in the rapidly evolving job market and make informed career decisions.
+                    </p>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="form-title">Get Started</h2>
+                    <form id="landing-form" class="form-container">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                name="name" 
+                                placeholder="Enter your full name"
+                                required
+                            >
+                            <span class="error-message" id="name-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email ID</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                placeholder="Enter your email address"
+                                required
+                            >
+                            <span class="error-message" id="email-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Contact Number</label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                name="phone" 
+                                placeholder="Enter your contact number"
+                                required
+                            >
+                            <span class="error-message" id="phone-error"></span>
+                        </div>
+
+                        <button type="submit" class="btn-continue">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboard-page" class="page">
+        <div class="container">
+            <div class="dashboard-content">
+                <div class="navbar">
+                    <h1 class="app-title">Career Predictor</h1>
+                    <button class="btn-logout" id="logout-btn">Logout</button>
+                </div>
+
+                <div class="welcome-section">
+                    <h2>Welcome, <span id="user-name"></span>!</h2>
+                    <p>Your personalized career longevity and skill obsolescence analysis dashboard</p>
+                </div>
+
+                <div class="user-info-card">
+                    <h3>Your Information</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Name:</label>
+                            <p id="display-name"></p>
+                        </div>
+                        <div class="info-item">
+                            <label>Email:</label>
+                            <p id="display-email"></p>
+                        </div>
+                        <div class="info-item">
+                            <label>Contact:</label>
+                            <p id="display-phone"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <div class="icon">📊</div>
+                        <h3>Career Analysis</h3>
+                        <p>Get detailed insights about your career longevity and growth potential</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🔮</div>
+                        <h3>Skill Predictions</h3>
+                        <p>Identify skills at risk of obsolescence and emerging opportunities</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">💡</div>
+                        <h3>Recommendations</h3>
+                        <p>Receive personalized recommendations to future-proof your career</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">📈</div>
+                        <h3>Market Trends</h3>
+                        <p>Stay updated with the latest industry trends and skill demands</p>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="start-assessment-btn" class="btn-primary">Start Assessment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Input Page -->
+    <div id="user-input-page" class="page">
+        <div class="container">
+            <div class="user-input-content">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 50%;"></div>
+                    <p class="progress-text">Step 2 of 3: Professional Profile</p>
+                </div>
+
+                <div class="page-header">
+                    <h2>Tell Us About Your Experience</h2>
+                    <p>Help us understand your professional background to provide personalized insights</p>
+                </div>
+
+                <form id="user-input-form" class="form-container">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="field-of-experience">Field of Experience</label>
+                            <select id="field-of-experience" name="fieldOfExperience" required>
+                                <option value="">Select a field</option>
+                                <option value="information-technology">Information Technology</option>
+                                <option value="finance">Finance & Banking</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="education">Education</option>
+                                <option value="manufacturing">Manufacturing</option>
+                                <option value="retail">Retail & E-commerce</option>
+                                <option value="telecommunications">Telecommunications</option>
+                                <option value="energy">Energy & Utilities</option>
+                                <option value="media">Media & Entertainment</option>
+                                <option value="government">Government & Public Service</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <span class="error-message" id="field-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="years-experience">Years of Experience</label>
+                            <input 
+                                type="number" 
+                                id="years-experience" 
+                                name="yearsExperience" 
+                                min="0"
+                                max="70"
+                                placeholder="e.g., 5"
+                                required
+                            >
+                            <span class="error-message" id="years-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="area-of-interest">Area of Interest</label>
+                        <input 
+                            type="text" 
+                            id="area-of-interest" 
+                            name="areaOfInterest" 
+                            placeholder="e.g., Cloud Computing, Data Science, DevOps"
+                            required
+                        >
+                        <span class="error-message" id="area-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="skills-input">Skills Possessed (Enter and press Enter or Add)</label>
+                        <div class="skills-input-wrapper">
+                            <input 
+                                type="text" 
+                                id="skills-input" 
+                                placeholder="e.g., Python, AWS, Machine Learning"
+                                autocomplete="off"
+                            >
+                            <button type="button" id="add-skill-btn" class="btn-add-skill">Add</button>
+                        </div>
+                        <div id="skills-tags" class="skills-tags">
+                            <!-- Skills will be added here as tags -->
+                        </div>
+                        <span class="error-message" id="skills-error"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="back-to-dashboard-btn" class="btn-secondary">Back</button>
+                        <button type="submit" class="btn-primary">Continue to Results</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Suggested Skills Page -->
+    <div id="suggested-skills-page" class="page">
+        <div class="container">
+            <div class="suggested-skills-content">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                    <p class="progress-text">Step 3 of 3: Skill Recommendations</p>
+                </div>
+
+                <div class="page-header">
+                    <h2>Your Personalized Skill Recommendations</h2>
+                    <p>Based on your profile and industry trends, here's what we recommend</p>
+                </div>
+
+                <div class="recommendations-container">
+                    <div class="recommendation-card priority-high">
+                        <div class="priority-badge">Priority: High</div>
+                        <h3>In-Demand Skills to Learn</h3>
+                        <p>These skills are highly sought after in your field and will boost your career longevity</p>
+                        <div id="suggested-skills-high" class="skills-grid">
+                            <!-- Skill cards will be populated here -->
+                        </div>
+                    </div>
+
+                    <div class="recommendation-card priority-medium">
+                        <div class="priority-badge">Priority: Medium</div>
+                        <h3>Emerging Skills to Watch</h3>
+                        <p>These skills are gaining importance and staying updated will provide competitive advantage</p>
+                        <div id="suggested-skills-medium" class="skills-grid">
+                            <!-- Skill cards will be populated here -->
+                        </div>
+                    </div>
+
+                    <div class="recommendation-card priority-low">
+                        <div class="priority-badge">Priority: Low</div>
+                        <h3>Skills at Risk of Obsolescence</h3>
+                        <p>Consider updating or complementing these skills to maintain market relevance</p>
+                        <div id="suggested-skills-low" class="skills-grid">
+                            <!-- Skill cards will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analysis-summary">
+                    <h3>Career Longevity Analysis</h3>
+                    <div class="summary-stats">
+                        <div class="stat-item">
+                            <h4>Career Longevity Score</h4>
+                            <p id="longevity-score" class="score-value">0/100</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>Skill Relevance Index</h4>
+                            <p id="relevance-score" class="score-value">0/100</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>Obsolescence Risk</h4>
+                            <p id="obsolescence-risk" class="score-value">Low</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recommendation-text">
+                    <h3>Personalized Insights</h3>
+                    <p id="recommendation-text"></p>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="back-to-input-btn" class="btn-secondary">Edit Profile</button>
+                    <button type="button" id="download-report-btn" class="btn-primary">Download Report</button>
+                    <button type="button" id="start-new-assessment-btn" class="btn-secondary" style="margin-left: 10px;">New Assessment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Functionalities Page -->
+    <div id="functionalities-page" class="page">
+        <div class="container">
+            <div class="functionalities-content">
+                <!-- Top Toolbar -->
+                <div class="functionalities-header">
+                    <div class="header-top">
+                        <h2 id="selected-skill-title">Skill: Loading...</h2>
+                        <button type="button" id="back-to-suggestions-btn" class="btn-close">← Back</button>
+                    </div>
+                    <p class="header-subtitle">Explore comprehensive skill analysis and development tools</p>
+                </div>
+
+                <!-- Feature Toolbar -->
+                <div class="feature-toolbar">
+                    <button class="feature-tab active" data-feature="decay-tracker">📉 Skill Decay Tracker</button>
+                    <button class="feature-tab" data-feature="role-prediction">🎯 Role Prediction</button>
+                    <button class="feature-tab" data-feature="skill-gap">🔍 Skill Gap Forecast</button>
+                    <button class="feature-tab" data-feature="priority-skills">⭐ Priority Skills</button>
+                    <button class="feature-tab" data-feature="roi-estimation">💰 ROI Estimation</button>
+                    <button class="feature-tab" data-feature="mentor">🤖 AI Mentor</button>
+                    <button class="feature-tab" data-feature="trends">📊 Industry Trends</button>
+                    <button class="feature-tab" data-feature="resilience">🛡️ Resilience Score</button>
+                </div>
+
+                <!-- Feature Content Area -->
+                <div class="features-container">
+                    <!-- 1. Skill Decay Tracker -->
+                    <div id="decay-tracker" class="feature-content active">
+                        <h3>Dynamic Skill Decay Tracker</h3>
+                        <p class="feature-desc">Monitor how your skill proficiency changes over time without active practice</p>
+                        
+                        <div class="decay-chart">
+                            <div class="chart-info">
+                                <div class="decay-metric">
+                                    <label>Current Decay %:</label>
+                                    <div class="metric-value" id="decay-percent">15%</div>
+                                </div>
+                                <div class="decay-metric">
+                                    <label>Days Since Practice:</label>
+                                    <div class="metric-value" id="decay-days">22</div>
+                                </div>
+                                <div class="decay-metric">
+                                    <label>Proficiency Level:</label>
+                                    <div class="metric-value" id="decay-proficiency">Advanced</div>
+                                </div>
+                            </div>
+                            <div class="decay-progress">
+                                <div class="progress-item">
+                                    <label>Decay Progress:</label>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar-fill" style="width: 15%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn-small" id="log-practice-btn">📝 Log Practice Session</button>
+                            <button class="btn-small" id="set-reminder-btn">⏰ Set Reminder</button>
+                        </div>
+                    </div>
+
+                    <!-- 2. Role Prediction -->
+                    <div id="role-prediction" class="feature-content">
+                        <h3>Future Role Prediction with Transition Roadmap</h3>
+                        <p class="feature-desc">Predict career trajectory and get actionable transition roadmaps</p>
+                        
+                        <div class="role-prediction-info">
+                            <div class="predicted-role">
+                                <h4>Predicted Next Role (12 months):</h4>
+                                <p class="role-name">Senior DevOps Engineer</p>
+                                <p class="role-probability">Probability: <strong>78%</strong></p>
+                            </div>
+                            
+                            <div class="transition-roadmap">
+                                <h4>Transition Roadmap:</h4>
+                                <div class="roadmap-steps">
+                                    <div class="roadmap-step">
+                                        <div class="step-number">1</div>
+                                        <div class="step-content">
+                                            <p class="step-title">Master Kubernetes Advanced Topics</p>
+                                            <p class="step-timeline">3 months</p>
+                                        </div>
+                                    </div>
+                                    <div class="roadmap-step">
+                                        <div class="step-number">2</div>
+                                        <div class="step-content">
+                                            <p class="step-title">Lead Infrastructure Projects</p>
+                                            <p class="step-timeline">3 months</p>
+                                        </div>
+                                    </div>
+                                    <div class="roadmap-step">
+                                        <div class="step-number">3</div>
+                                        <div class="step-content">
+                                            <p class="step-title">Mentoring Junior DevOps Team</p>
+                                            <p class="step-timeline">Ongoing</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-small" id="download-roadmap-btn">📥 Download Roadmap</button>
+                    </div>
+
+                    <!-- 3. Skill Gap Forecast -->
+                    <div id="skill-gap" class="feature-content">
+                        <h3>AI Powered Skill Gap Forecast</h3>
+                        <p class="feature-desc">Analyze gaps between current and target role requirements</p>
+                        
+                        <div class="skill-gap-analysis">
+                            <h4>Gap Analysis for: Senior DevOps Engineer</h4>
+                            
+                            <div class="gap-item">
+                                <div class="gap-header">
+                                    <span class="gap-name">Advanced Kubernetes</span>
+                                    <span class="gap-level">Gap: 35%</span>
+                                </div>
+                                <div class="gap-progress">
+                                    <div class="gap-bar-container">
+                                        <div class="gap-bar-fill" style="width: 35%;"></div>
+                                    </div>
+                                </div>
+                                <p class="gap-recommendation">Recommendation: Enroll in CKA certification course</p>
+                            </div>
+
+                            <div class="gap-item">
+                                <div class="gap-header">
+                                    <span class="gap-name">Terraform & IaC</span>
+                                    <span class="gap-level">Gap: 20%</span>
+                                </div>
+                                <div class="gap-progress">
+                                    <div class="gap-bar-container">
+                                        <div class="gap-bar-fill" style="width: 20%;"></div>
+                                    </div>
+                                </div>
+                                <p class="gap-recommendation">Recommendation: Practice hands-on projects</p>
+                            </div>
+
+                            <div class="gap-item">
+                                <div class="gap-header">
+                                    <span class="gap-name">Cloud Security</span>
+                                    <span class="gap-level">Gap: 45%</span>
+                                </div>
+                                <div class="gap-progress">
+                                    <div class="gap-bar-container">
+                                        <div class="gap-bar-fill" style="width: 45%;"></div>
+                                    </div>
+                                </div>
+                                <p class="gap-recommendation">Recommendation: Complete AWS Security certification</p>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-small" id="create-gap-plan-btn">📋 Create Learning Plan</button>
+                    </div>
+
+                    <!-- 4. Priority Skills -->
+                    <div id="priority-skills" class="feature-content">
+                        <h3>Priority-wise Skill Recommendation</h3>
+                        <p class="feature-desc">Skills ranked by market demand and career impact</p>
+                        
+                        <div class="priority-skills-list">
+                            <div class="priority-group high">
+                                <h4>🔴 High Priority (Learn Immediately)</h4>
+                                <ul>
+                                    <li><span class="skill-name">Kubernetes Advanced</span> <span class="skill-demand">Market Demand: 95%</span></li>
+                                    <li><span class="skill-name">Cloud Security</span> <span class="skill-demand">Market Demand: 92%</span></li>
+                                    <li><span class="skill-name">GitOps Workflows</span> <span class="skill-demand">Market Demand: 87%</span></li>
+                                </ul>
+                            </div>
+
+                            <div class="priority-group medium">
+                                <h4>🟡 Medium Priority (Learn in 3-6 Months)</h4>
+                                <ul>
+                                    <li><span class="skill-name">Terraform</span> <span class="skill-demand">Market Demand: 78%</span></li>
+                                    <li><span class="skill-name">Prometheus Monitoring</span> <span class="skill-demand">Market Demand: 72%</span></li>
+                                    <li><span class="skill-name">Service Mesh (Istio)</span> <span class="skill-demand">Market Demand: 68%</span></li>
+                                </ul>
+                            </div>
+
+                            <div class="priority-group low">
+                                <h4>🟢 Low Priority (Complementary Skills)</h4>
+                                <ul>
+                                    <li><span class="skill-name">Legacy System Maintenance</span> <span class="skill-demand">Market Demand: 35%</span></li>
+                                    <li><span class="skill-name">Waterfall Project Management</span> <span class="skill-demand">Market Demand: 28%</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. ROI Estimation -->
+                    <div id="roi-estimation" class="feature-content">
+                        <h3>Learning ROI Estimation</h3>
+                        <p class="feature-desc">Calculate return on investment for learning different skills</p>
+                        
+                        <div class="roi-analysis">
+                            <div class="roi-card high-roi">
+                                <h4>Kubernetes Advanced</h4>
+                                <div class="roi-metrics">
+                                    <div class="roi-metric">
+                                        <label>Learning Time:</label>
+                                        <span>120 hours</span>
+                                    </div>
+                                    <div class="roi-metric">
+                                        <label>Salary Increase:</label>
+                                        <span>+$15,000/year</span>
+                                    </div>
+                                    <div class="roi-metric">
+                                        <label>ROI Score:</label>
+                                        <span class="roi-score">9.2/10</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="roi-card medium-roi">
+                                <h4>Cloud Security</h4>
+                                <div class="roi-metrics">
+                                    <div class="roi-metric">
+                                        <label>Learning Time:</label>
+                                        <span>150 hours</span>
+                                    </div>
+                                    <div class="roi-metric">
+                                        <label>Salary Increase:</label>
+                                        <span>+$18,000/year</span>
+                                    </div>
+                                    <div class="roi-metric">
+                                        <label>ROI Score:</label>
+                                        <span class="roi-score">8.7/10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-small" id="optimize-learning-btn">🎯 Optimize Learning Plan</button>
+                    </div>
+
+                    <!-- 6. AI Mentor -->
+                    <div id="mentor" class="feature-content">
+                        <h3>AI Mentor Simulation</h3>
+                        <p class="feature-desc">Interactive AI mentor for personalized guidance and Q&A</p>
+                        
+                        <div class="mentor-chat">
+                            <div class="chat-messages">
+                                <div class="chat-message mentor">
+                                    <p>Hello! I'm your AI Mentor. I can help you with:</p>
+                                    <ul style="margin-top: 8px; margin-left: 20px;">
+                                        <li>Learning path guidance</li>
+                                        <li>Technical questions</li>
+                                        <li>Career advice</li>
+                                        <li>Interview preparation</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="chat-input-container">
+                                <input type="text" id="mentor-input" placeholder="Ask me anything about your career journey..." class="chat-input">
+                                <button id="send-mentor-msg" class="btn-send">Send</button>
+                            </div>
+                        </div>
+
+                        <div class="quick-questions">
+                            <p>Quick Questions:</p>
+                            <button class="btn-question" data-question="How to prepare for Kubernetes certification?">Kubernetes Prep</button>
+                            <button class="btn-question" data-question="What are the best DevOps practices?">DevOps Best Practices</button>
+                            <button class="btn-question" data-question="How to transition to architectural roles?">Career Transition</button>
+                        </div>
+                    </div>
+
+                    <!-- 7. Industry Trends -->
+                    <div id="trends" class="feature-content">
+                        <h3>Industry Trend and Event Alerts</h3>
+                        <p class="feature-desc">Stay updated with latest industry trends and upcoming events</p>
+                        
+                        <div class="trends-alerts">
+                            <div class="trend-card">
+                                <div class="trend-label">Trending Now</div>
+                                <h4>Kubernetes Adoption Reaches 91% Among Enterprises</h4>
+                                <p>Major organizations are accelerating cloud-native adoption. Kubernetes skills are in extreme demand with 23% salary premium.</p>
+                                <a href="#" class="trend-link">Read Full Article →</a>
+                            </div>
+
+                            <div class="trend-card">
+                                <div class="trend-label">Upcoming Event</div>
+                                <h4>KubeCon North America 2026</h4>
+                                <p>Oct 15-18 | Chicago, IL - The premier Kubernetes & cloud-native conference with 500+ sessions and 10,000+ attendees.</p>
+                                <button class="btn-small">📅 Save Event</button>
+                            </div>
+
+                            <div class="trend-card">
+                                <div class="trend-label">Skills Alert</div>
+                                <h4>AI/ML in DevOps Growing 40% YoY</h4>
+                                <p>Companies are integrating AI/ML for automated operations. Learning AI-driven DevOps tools gives you competitive edge.</p>
+                                <a href="#" class="trend-link">Explore Learning Resources →</a>
+                            </div>
+
+                            <div class="trend-card">
+                                <div class="trend-label">Salary Update</div>
+                                <h4>DevOps Engineer Median Salary: $135,000</h4>
+                                <p>+12% increase from last year. Senior roles with Kubernetes and Security skills command $170,000+ packages.</p>
+                                <button class="btn-small">📊 View Details</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 8. Resilience Score -->
+                    <div id="resilience" class="feature-content">
+                        <h3>Skill Portfolio Resilience Score</h3>
+                        <p class="feature-desc">Measure your career resilience and adaptability index</p>
+                        
+                        <div class="resilience-dashboard">
+                            <div class="resilience-score-main">
+                                <div class="score-circle">
+                                    <div class="score-value">7.6</div>
+                                    <div class="score-label">/10</div>
+                                </div>
+                                <div class="resilience-text">
+                                    <p><strong>Overall Resilience: STRONG</strong></p>
+                                    <p>Your skill portfolio shows strong adaptability with a diversified tech stack.</p>
+                                </div>
+                            </div>
+
+                            <div class="resilience-factors">
+                                <h4>Resilience Factors:</h4>
+                                <div class="factor-item">
+                                    <label>Skill Diversity</label>
+                                    <div class="factor-progress">
+                                        <div class="factor-bar" style="width: 80%;"></div>
+                                    </div>
+                                    <span class="factor-score">8.0/10</span>
+                                </div>
+
+                                <div class="factor-item">
+                                    <label>Market Demand Match</label>
+                                    <div class="factor-progress">
+                                        <div class="factor-bar" style="width: 85%;"></div>
+                                    </div>
+                                    <span class="factor-score">8.5/10</span>
+                                </div>
+
+                                <div class="factor-item">
+                                    <label>Emerging Tech Coverage</label>
+                                    <div class="factor-progress">
+                                        <div class="factor-bar" style="width: 65%;"></div>
+                                    </div>
+                                    <span class="factor-score">6.5/10</span>
+                                </div>
+
+                                <div class="factor-item">
+                                    <label>Professional Network</label>
+                                    <div class="factor-progress">
+                                        <div class="factor-bar" style="width: 72%;"></div>
+                                    </div>
+                                    <span class="factor-score">7.2/10</span>
+                                </div>
+                            </div>
+
+                            <div class="resilience-recommendations">
+                                <h4>To Improve Resilience:</h4>
+                                <ul>
+                                    <li>✓ Focus on emerging AI/ML DevOps tools</li>
+                                    <li>✓ Expand cloud provider expertise (currently Azure-focused)</li>
+                                    <li>✓ Build soft skills: team leadership and communication</li>
+                                    <li>✓ Expand professional network through communities and events</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="back-to-suggestions-btn-bottom" class="btn-secondary">← Back to Suggestions</button>
+                    <button type="button" id="save-analysis-btn" class="btn-primary">💾 Save Analysis</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

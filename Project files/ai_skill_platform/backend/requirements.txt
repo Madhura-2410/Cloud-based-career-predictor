@@ -1,0 +1,67 @@
+# FastAPI & Web Framework
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic
+pydantic-settings
+email-validator
+
+# Azure SDK Libraries (Core Only)
+azure-identity
+azure-storage-blob
+azure-data-tables
+azure-keyvault-secrets
+azure-monitor-query
+azure-functions
+azure-cosmos
+
+# Database & ORM
+sqlalchemy
+pyodbc
+alembic
+
+# Authentication & Security
+cryptography
+pyjwt
+python-jose
+passlib
+bcrypt
+msal
+
+# Data Processing & ML
+pandas
+numpy
+scikit-learn
+
+# NLP & Text Processing
+nltk
+spacy
+textblob
+
+# Data Analysis
+scipy
+matplotlib
+seaborn
+
+# HTTP & API
+httpx
+requests
+aiohttp
+
+# Configuration & Logging
+python-dotenv
+python-logging-loki
+
+# Testing
+pytest
+pytest-asyncio
+pytest-cov
+
+# Development
+black
+flake8
+mypy
+isort
+
+# Utilities
+pyyaml
