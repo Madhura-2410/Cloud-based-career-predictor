@@ -1,0 +1,14 @@
+{
+  "name": "cloud-based-career-predictor-root",
+  "version": "1.0.0",
+  "description": "Root package for Cloud-based Career Predictor React frontend deployment",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm install --prefix \"Project files/ai_skill_platform/frontend\"",
+    "build": "npm run build --prefix \"Project files/ai_skill_platform/frontend\"",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

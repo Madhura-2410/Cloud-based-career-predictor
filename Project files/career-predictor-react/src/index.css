@@ -34,6 +34,17 @@
     animation: slideInRight 0.5s ease-in;
   }
 }
+:root {
+  --text: #4b5563;
+  --text-h: #111827;
+  --bg: #ffffff;
+  --border: #e5e7eb;
+  --code-bg: #f3f4f6;
+  --accent: #a855f7;
+  --accent-bg: rgba(168, 85, 247, 0.1);
+  --accent-border: rgba(168, 85, 247, 0.3);
+  --social-bg: rgba(229, 231, 235, 0.5);
+  --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
   color: var(--text);
   background: var(--bg);
