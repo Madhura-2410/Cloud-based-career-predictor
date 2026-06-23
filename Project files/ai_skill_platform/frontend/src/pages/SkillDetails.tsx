@@ -22,9 +22,32 @@ import { getMarketContext } from '../utils/marketContext';
 const SkillDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { userProfile, addToLearningPath, removeFromLearningPath } = useUser();
+  const { userProfile, addToLearningPath, removeFromLearningPath, setPreferredCurrency } = useUser();
   const [activeTab, setActiveTab] = useState('decay');
   const [feedbackMessage, setFeedbackMessage] = useState<string>('');
+
+  const formatSalary = (salaryStr: string, currency: string) => {
+    if (currency === 'USD') return salaryStr;
+    const rates: Record<string, number> = { EUR: 0.92, GBP: 0.79, INR: 83.5 };
+    const symbols: Record<string, string> = { EUR: '€', GBP: '£', INR: '₹' };
+    const rate = rates[currency] || 1;
+    const symbol = symbols[currency] || '$';
+    
+    const matches = salaryStr.match(/\$(\d{1,3}(?:,\d{3})*)/g);
+    if (!matches || matches.length !== 2) return salaryStr;
+    
+    const num1 = parseInt(matches[0].replace(/[\$,]/g, ''));
+    const num2 = parseInt(matches[1].replace(/[\$,]/g, ''));
+    
+    const formatNumber = (num: number) => {
+      if (currency === 'INR') {
+        return new Intl.NumberFormat('en-IN').format(Math.round((num * rate) / 1000) * 1000);
+      }
+      return new Intl.NumberFormat('en-US').format(Math.round((num * rate) / 1000) * 1000);
+    };
+
+    return `${symbol}${formatNumber(num1)} - ${symbol}${formatNumber(num2)} / yr`;
+  };
 
   const itemId = id || '';
   const itemTitle = `${id?.replace(/-/g, ' ') ?? 'Recommended Skill'}`;
@@ -179,31 +202,23 @@ const SkillDetails: React.FC = () => {
 
                 {/* Salary Trend Card */}
                 <div className="p-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 rounded-xl">
-                  <span className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider block mb-1">Salary Range</span>
-                  <span className="text-slate-950 dark:text-white font-black text-base">{contextData.salaryTrend}</span>
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider block">Salary Range</span>
+                    <select 
+                      value={userProfile.preferredCurrency} 
+                      onChange={(e) => setPreferredCurrency(e.target.value as any)}
+                      className="text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded px-1 py-0.5 text-slate-700 dark:text-slate-200 font-medium"
+                    >
+                      <option value="USD">USD ($)</option>
+                      <option value="EUR">EUR (€)</option>
+                      <option value="GBP">GBP (£)</option>
+                      <option value="INR">INR (₹)</option>
+                    </select>
+                  </div>
+                  <span className="text-slate-950 dark:text-white font-black text-base">{formatSalary(contextData.salaryTrend, userProfile.preferredCurrency)}</span>
                 </div>
 
-                {/* Future Scope Progress */}
-                <div className="p-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 rounded-xl">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase tracking-wider">Future Scope</span>
-                  </div>
-                  <span className="text-slate-700 dark:text-slate-300 text-xs font-bold block mb-2">{contextData.futureScope}</span>
-                  <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div className="bg-indigo-600 dark:bg-indigo-500 h-full rounded-full transition-all duration-500" style={{ width: `${contextData.futureScopePercent}%` }}></div>
-                  </div>
-                </div>
 
-                {/* Adoption Rate Card */}
-                <div className="p-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 rounded-xl">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-slate-500 dark:text-slate-400 text-[10px] font-bold uppercase tracking-wider">Adoption Rate</span>
-                    <span className="text-slate-900 dark:text-slate-300 text-xs font-bold">{contextData.adoptionRate}</span>
-                  </div>
-                  <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden mt-1.5">
-                    <div className="bg-purple-650 dark:bg-purple-500 h-full rounded-full transition-all duration-500" style={{ width: `${contextData.adoptionPercent}%` }}></div>
-                  </div>
-                </div>
 
                 {/* Complexity Stars */}
                 <div className="flex justify-between items-center py-1 px-1">
@@ -234,25 +249,7 @@ const SkillDetails: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-indigo-600 to-purple-700 p-8 rounded-2xl text-white shadow-xl relative overflow-hidden group">
-              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay"></div>
-              <FiZap className="text-yellow-300 mb-5 relative z-10 group-hover:scale-110 transition-transform" size={28} />
-              <h4 className="font-bold text-xl mb-3 relative z-10">Power Move</h4>
-              <p className="text-indigo-100 text-sm font-medium leading-relaxed mb-6 relative z-10">
-                Mastering this skill right now will increase your match rate for high-paying remote roles by <strong>85%</strong>.
-              </p>
-              <button
-                onClick={handleToggleLearningPath}
-                className={`w-full py-3 rounded-xl font-bold transition-all shadow-sm relative z-10 active:scale-[0.98] ${isAlreadyAdded ? 'bg-white text-indigo-700 border border-slate-200 hover:bg-slate-50' : 'bg-white text-indigo-700 hover:bg-indigo-50'}`}
-              >
-                {isAlreadyAdded ? 'Remove From Path' : 'Add to Learning Path'}
-              </button>
-              {feedbackMessage && (
-                <div className="mt-4 inline-flex items-center justify-center rounded-full bg-green-50 border border-green-200 px-4 py-2 text-sm font-semibold text-green-800 shadow-sm animate-fadeIn">
-                  {feedbackMessage}
-                </div>
-              )}
-            </div>
+
           </div>
         </div>
       </main>

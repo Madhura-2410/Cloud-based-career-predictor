@@ -59,7 +59,7 @@ class ApiClient {
 
   // Skills endpoints
   listSkills(category?: string) {
-    return this.client.get('/api/skills', { params: { category } });
+    return this.client.get('/skills', { params: { category } });
   }
 
   getUserSkills(userId: string) {

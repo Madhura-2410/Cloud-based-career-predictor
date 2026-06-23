@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FiBookOpen, FiLogOut, FiRefreshCw, FiSettings, FiLock, FiMoon, FiSun } from 'react-icons/fi';
+import { FiBookOpen, FiLogOut, FiRefreshCw, FiSettings, FiLock } from 'react-icons/fi';
 import { useUser } from '../../context/UserContext';
 
 interface HeaderProps {
@@ -10,7 +10,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { userProfile, toggleTheme } = useUser();
+  const { userProfile } = useUser();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const hideBackButton = ['/','/input'].includes(location.pathname);
@@ -56,13 +56,6 @@ const Header: React.FC<HeaderProps> = ({ setIsAuthenticated }) => {
             </button>
           )}
 
-          <button
-            onClick={toggleTheme}
-            className="rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 p-3 text-slate-700 dark:text-slate-100 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition"
-            aria-label="Toggle theme"
-          >
-            {userProfile.theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />}
-          </button>
 
           <button
             onClick={() => navigate('/learning-path')}

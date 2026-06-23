@@ -11,7 +11,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ setIsAuthenti
   const { userProfile } = useUser();
 
   return (
-    <div className={`min-h-screen ${userProfile.theme === 'dark' ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       <Header setIsAuthenticated={setIsAuthenticated} />
       <main className="pt-24 transition-colors duration-300">
         <Outlet />

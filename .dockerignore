@@ -1,0 +1,25 @@
+.git
+.gitignore
+.env
+.env.*
+**/.git
+**/.gitignore
+**/.env
+**/.env.*
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.log
+**/.cache
+**/node_modules
+**/build
+**/dist
+**/coverage
+Project files/ai_skill_platform/frontend/node_modules
+Project files/ai_skill_platform/frontend/build
+Project files/ai_skill_platform/frontend/.cache
+Project files/ai_skill_platform/backend/__pycache__
+Project files/ai_skill_platform/backend/**/*.pyc
+*.docx
+*.xlsx
+*.zip

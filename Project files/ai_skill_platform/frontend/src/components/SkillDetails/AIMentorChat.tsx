@@ -67,66 +67,90 @@ const AIMentorChat: React.FC<Props> = ({ skillId }) => {
 
   const randomChoice = <T,>(options: T[]) => options[Math.floor(Math.random() * options.length)];
 
-  const topicResponse = (question: string) => {
-    const normalized = question.toLowerCase();
-    const topic = data.skill.toLowerCase();
+  const generateDynamicReply = (history: { text: string; isAi: boolean }[], currentQuestion: string) => {
+    const normalized = currentQuestion.toLowerCase();
+    
+    let contextSubject = data.skill;
+    if (history.length >= 2) {
+       const lastUserMsg = history.filter(m => !m.isAi).pop()?.text.toLowerCase() || '';
+       if (!/skill|cert|salary|job|role|course|python|aws|azure/i.test(normalized)) {
+          if (lastUserMsg.includes('certification') || lastUserMsg.includes('cert')) contextSubject = "certifications";
+          else if (lastUserMsg.includes('salary') || lastUserMsg.includes('pay')) contextSubject = "compensation";
+          else if (lastUserMsg.includes('job') || lastUserMsg.includes('role')) contextSubject = "the job market";
+       }
+    }
 
-    const genericReplies = [
-      `A strong way to own ${data.skill} is to combine hands-on projects with short expert-led certifications.`,
-      `I’d recommend structuring your learning around real use cases for ${data.skill}, then iterating on each project.`,
-      `Focus on the core concepts first, then layer in practical lab work to build confidence with ${data.skill}.`,
-    ];
+    // 1. Greeting or Identity
+    if (/^(hi|hello|hey|greetings)/i.test(normalized) || /who are you|what are you/i.test(normalized)) {
+      return `Hello! I'm your AI Mentor specializing in ${data.skill}. I can analyze salary trends, estimate ROI for certifications, or connect you with human experts. What would you like to know?`;
+    }
 
-    if (/human mentor|connect to mentor|need mentor|real mentor|talk to mentor/i.test(normalized)) {
+    // 2. Human Mentor Connection
+    if (/human|person|someone|other|different|connect|talk/i.test(normalized)) {
       setShowHumanMentor(true);
-      const mentor = mentorDirectory(userField || topic);
-      return `I can connect you with a human mentor who specializes in ${mentor.specialization}. Their name is ${mentor.name}, and I’ll display their contact below for an immediate connection.`;
+      return "I'll connect you with a specialized human mentor who can provide 1-on-1 guidance. Their contact details are now displayed below.";
     }
 
-    if (/sql|database|mongodb|mysql|postgres|oracle/i.test(normalized) || topic.includes('sql') || topic.includes('database')) {
-      return randomChoice([
-        `For SQL and database administration, focus on query optimization, indexing, backup strategies, and cloud database services.`,
-        `DBA roles reward strong data modelling, stored procedure expertise, and a solid grasp of scaling databases safely.`,
-        `Certifications like AWS Database Specialty, Azure Database Administrator, or Oracle DBA will strengthen your profile for database roles.`,
-      ]);
+    // 3. Quantitative / ROI
+    if (/(percentage|%|increase|roi|probability|chance|likelihood)/i.test(normalized)) {
+      const isResume = /resume|cv/i.test(normalized);
+      const isSalary = /salary|pay|compensation|earn/i.test(normalized);
+      const isHiring = /hire|job|get|interview/i.test(normalized);
+
+      if (isResume) return `Based on current market demand, adding ${contextSubject} to your profile increases your resume's competitive value by approximately 18–25% in enterprise screening algorithms.`;
+      if (isSalary) return `Market data indicates that mastering ${contextSubject} yields an estimated 12–20% salary premium compared to baseline roles.`;
+      if (isHiring) return `Your probability of securing an interview for a senior role increases by roughly 35% when you demonstrate hands-on production experience in this area.`;
+      
+      return `The estimated ROI for this competency is highly favorable, typically yielding a 20-30% improvement in overall career velocity within 12 months.`;
     }
 
-    if (/cloud|aws|azure|gcp|devops|deployment|kubernetes/i.test(normalized) || topic.includes('cloud')) {
-      return randomChoice([
-        `Cloud computing mastery comes from hands-on architecture work, secure deployments, and end-to-end automation.`,
-        `For Azure/AWS paths, combine infrastructure-as-code with service design patterns and monitoring best practices.`,
-        `A strong portfolio for cloud roles includes a deployment pipeline, container orchestration, and multi-region design.`,
-      ]);
+    // 4. Salary / Compensation
+    if (/salary|pay|compensation|how much|worth|value|earn|income/i.test(normalized)) {
+      return `For ${data.skill}, the current market salary range spans from $95,000 to $160,000+ depending on your region and seniority. Advanced certifications tend to push you toward the upper end of that bracket.`;
     }
 
-    if (/ui|ux|figma|design|prototype|user experience/i.test(normalized) || topic.includes('ui') || topic.includes('ux')) {
-      return randomChoice([
-        `UI/UX is about crafting delightful user journeys — start with research, then iterate on wireframes and prototypes.`,
-        `Build experience with design systems, accessibility reviews, and a portfolio that explains your thinking, not just the visuals.`,
-        `Figma, user testing, and component libraries are critical tools for a modern UI/UX path.`,
-      ]);
+    // 5. Follow-ups
+    if (normalized.includes('what about') || normalized.includes('and for') || normalized.includes('how about')) {
+      return `Regarding ${contextSubject}, the fundamental dynamic remains the same. Hiring managers prioritize candidates who combine theoretical knowledge with verifiable, deployed projects.`;
     }
 
-    if (/security|cyber|threat|risk/i.test(normalized) || topic.includes('security')) {
-      return randomChoice([
-        `Cybersecurity advice: learn secure architecture, incident response, and how to harden cloud workloads.`,
-        `Pair your skill knowledge with threat modelling and compliance frameworks like ISO 27001 or NIST.`,
-        `Red team/blue team projects help you translate security concepts into real-world risk reduction.`,
-      ]);
+    // 6. Time Estimation
+    if (/how long|time|months|days|weeks|duration|fast/i.test(normalized)) {
+      return `Assuming dedicated study of 10-15 hours a week, reaching professional proficiency in ${contextSubject} takes approximately 3 to 5 months.`;
     }
 
-    return randomChoice(genericReplies);
+    // 7. Certifications
+    if (/cert|certificate|exam|credential/i.test(normalized)) {
+      return `Certifications act as strong trust signals. Target one advanced, vendor-specific certification that involves a practical lab component rather than accumulating multiple fundamental badges.`;
+    }
+
+    // 8. Trends and Growth
+    if (/trend|future|growth|demand|outlook/i.test(normalized)) {
+      return `The market trajectory for ${data.skill} shows sustained 15-20% YoY growth. Enterprise modernization efforts are currently driving a massive deficit in qualified engineers for these stacks.`;
+    }
+
+    // 9. How to start
+    if (/how to|what should|start|begin|learn|guide/i.test(normalized)) {
+      return `The most effective approach is to architect a small solution from scratch. Build an end-to-end project that solves a real business problem using ${data.skill}.`;
+    }
+
+    // Fallback: analyze the prompt directly instead of giving generic advice.
+    return `I see you are asking about "${currentQuestion}". To give you the most accurate metrics for ${data.skill}, could you specify if you are looking for salary impact, learning timelines, or certification value?`;
   };
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
     const question = input.trim();
-    setMessages((prev) => [...prev, { text: question, isAi: false }]);
+    
+    // Add user message to history instantly
+    const newHistory = [...messages, { text: question, isAi: false }];
+    setMessages(newHistory);
     setInput('');
 
     setTimeout(() => {
-      const reply = topicResponse(question);
+      // Pass the updated history and the new question to the generator
+      const reply = generateDynamicReply(newHistory, question);
       setMessages((prev) => [...prev, { text: reply, isAi: true }]);
     }, 600);
   };

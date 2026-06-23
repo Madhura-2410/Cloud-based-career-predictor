@@ -23,7 +23,7 @@ interface UserProfile {
   learningPath: LearningPathItem[];
   experienceYears?: number;
   fieldOfExperience?: string;
-  theme: 'light' | 'dark';
+  theme: 'light';
   preferredCurrency: CurrencyCode;
   email?: string;
   contactNumber?: string;
@@ -39,7 +39,7 @@ interface UserContextType {
   addToLearningPath: (item: LearningPathItem) => void;
   removeFromLearningPath: (id: string) => void;
   clearLearningPath: () => void;
-  toggleTheme: () => void;
+
   setPreferredCurrency: (currency: CurrencyCode) => void;
 }
 
@@ -124,7 +124,7 @@ const normalizeUserProfile = (raw: unknown): UserProfile => {
     learningPath: normalizeLearningPath(asRecord.learningPath),
     experienceYears: typeof asRecord.experienceYears === 'number' ? asRecord.experienceYears : defaultProfile.experienceYears,
     fieldOfExperience: typeof asRecord.fieldOfExperience === 'string' ? asRecord.fieldOfExperience : defaultProfile.fieldOfExperience,
-    theme: asRecord.theme === 'dark' ? 'dark' : 'light',
+    theme: 'light',
     preferredCurrency: ['USD', 'EUR', 'GBP', 'INR'].includes(String(asRecord.preferredCurrency))
       ? (String(asRecord.preferredCurrency) as CurrencyCode)
       : defaultProfile.preferredCurrency,
@@ -152,12 +152,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUserProfile((prev) => ({ ...prev, ...updates }));
   };
 
-  const toggleTheme = () => {
-    setUserProfile((prev) => ({
-      ...prev,
-      theme: prev.theme === 'dark' ? 'light' : 'dark',
-    }));
-  };
+
 
   const setPreferredCurrency = (currency: CurrencyCode) => {
     setUserProfile((prev) => ({ ...prev, preferredCurrency: currency }));
@@ -184,8 +179,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   useEffect(() => {
     try {
       window.localStorage.setItem('userProfile', JSON.stringify(userProfile));
-      window.localStorage.setItem('preferredTheme', userProfile.theme);
-      document.documentElement.classList.toggle('dark', userProfile.theme === 'dark');
+      window.localStorage.setItem('preferredTheme', 'light');
+      document.documentElement.classList.remove('dark');
     } catch {
       // Ignore persistence failures in unsupported browsers.
     }
@@ -196,7 +191,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       value={{
         userProfile,
         updateUserProfile,
-        toggleTheme,
+
         setPreferredCurrency,
         addToLearningPath,
         removeFromLearningPath,
